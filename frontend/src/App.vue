@@ -1,31 +1,52 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <template v-if="$route.name !== 'login'">
+    <header class="header">
+      <NavBar />
+    </header>
+    <TheLayout>
+      <router-view></router-view>
+    </TheLayout>
+  </template>
+  <template v-else>
+    <router-view></router-view>
+  </template>
+  <footer
+    class="footer"
+    :class="{ inside: $route.name === 'login' }"
+  >
+    Copyright © 2022 lrhhz<br><span>Built with Vue3.2</span>
+  </footer>
 </template>
 
+<script setup>
+import "./assets/base.css";
+import NavBar from "./components/NavBar.vue";
+import TheLayout from "./components/TheLayout.vue";
+</script>
+
+<!-- App.vue，注意 style 为 scoped -->
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+.header {
+  height: 80px;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.footer {
+  margin-top: 50px;
+  border-top: 1px #dcdcdc solid;
+  text-align: center;
+  padding: 38px 0;
+  color: #828282;
+  font-size: 18px;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.footer span {
+  font-size: 14px;
+}
+
+.footer.inside {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 </style>
